@@ -1,7 +1,9 @@
-import notify2
+try:
+    import notify2
+except ImportError:
+    print("run pip install notify2")
 import json
 import urllib.request
-import numpy
 
 url_today = urllib.request.urlopen(
     "https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-andamento-nazionale-latest.json")
@@ -16,7 +18,7 @@ notify2.init("covid-info")
 
 variazione_deceduti = int(data_today[0]["deceduti"]) - int(data_yesterday[yesterday_index-2]["deceduti"])
 variazione_guariti = int(data_today[0]["dimessi_guariti"]) - int(data_yesterday[yesterday_index-2]["dimessi_guariti"])
-print(variazione_deceduti)
+
 msg = "POSITIVI: {} (+{}) di cui {} ({}) attuali DECEDUTI: {} (+{}); GUARITI: {} (+{})".format(
     data_today[0]["totale_casi"], data_today[0]["nuovi_positivi"], 
     data_today[0]["totale_positivi"], data_today[0]["variazione_totale_positivi"], 
